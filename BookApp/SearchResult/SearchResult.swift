@@ -28,6 +28,7 @@ class SearchResult:UIViewController{
         let tb = UITableView(frame: .zero)
         tb.translatesAutoresizingMaskIntoConstraints = false
         tb.showsVerticalScrollIndicator = false
+        tb.separatorStyle = .none
         return tb
     }()
     

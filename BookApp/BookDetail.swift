@@ -24,6 +24,7 @@ class BookDetail:UIViewController{
     let authorLabel:UILabel = {
         let lb = UILabel(frame: .zero)
         lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.sizeToFit()
         lb.text = "Tác Giả : "
         return lb
     }()
@@ -31,6 +32,7 @@ class BookDetail:UIViewController{
     let priceLabel:UILabel = {
         let lb = UILabel(frame: .zero)
         lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.sizeToFit()
         lb.text = "Giá : "
         return lb
     }()
@@ -38,7 +40,16 @@ class BookDetail:UIViewController{
     let publisher:UILabel = {
         let lb = UILabel(frame: .zero)
         lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.sizeToFit()
         lb.text = "Nhà Xuất Bản : "
+        return lb
+    }()
+    
+    let theloai:UILabel = {
+        let lb = UILabel(frame: .zero)
+        lb.translatesAutoresizingMaskIntoConstraints = false
+        lb.sizeToFit()
+        lb.text = "Thể Loại: "
         return lb
     }()
     
@@ -55,7 +66,7 @@ class BookDetail:UIViewController{
         let st = UIStackView()
         st.translatesAutoresizingMaskIntoConstraints = false
         st.axis = .vertical
-        st.distribution = .fillProportionally
+        st.distribution = .fill
         st.backgroundColor = .lightText
         st.layer.cornerRadius = 10
         return st
@@ -209,6 +220,7 @@ class BookDetail:UIViewController{
         let lb = UILabel(frame: .zero)
         lb.translatesAutoresizingMaskIntoConstraints = false
         lb.text = "Độc Giả Khác Cũng Quan Tâm"
+        lb.font = .boldSystemFont(ofSize: 10)
         lb.alpha = 0
         return lb
     }()
@@ -234,7 +246,7 @@ class BookDetail:UIViewController{
         cv.isPagingEnabled = true
         cv.showsHorizontalScrollIndicator = false
         cv.alwaysBounceHorizontal = false
-        cv.layer.cornerRadius = 20
+//        cv.layer.cornerRadius = 20
         cv.alpha = 0
         cv.dataSource = self
         cv.delegate = self
@@ -258,6 +270,7 @@ class BookDetail:UIViewController{
         stack.addArrangedSubview(priceLabel)
         stack.addArrangedSubview(authorLabel)
         stack.addArrangedSubview(publisher)
+        stack.addArrangedSubview(theloai)
         stack.addArrangedSubview(bookDescription)
         
         
@@ -273,7 +286,7 @@ class BookDetail:UIViewController{
         beforeRecommend = outerBookImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -150)
         beforeRecommend?.priority = UILayoutPriority(998)
         
-        afterRecommend = outerBookImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -250)
+        afterRecommend = outerBookImageView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor,constant: -255)
         afterRecommend?.priority = UILayoutPriority(999)
         
         self.view.addSubview(self.recommendCV)
@@ -313,10 +326,10 @@ class BookDetail:UIViewController{
             stack.topAnchor.constraint(equalTo: booksNameLabel.bottomAnchor,constant: 10),
             stack.leadingAnchor.constraint(equalTo: self.view.leadingAnchor,constant: 10),
             stack.trailingAnchor.constraint(equalTo: self.view.trailingAnchor,constant: -10),
-            stack.heightAnchor.constraint(equalToConstant: 120),
+            stack.heightAnchor.constraint(equalToConstant: 150),
             
             
-            cartStack.topAnchor.constraint(equalTo: stack.bottomAnchor,constant: 20),
+            cartStack.topAnchor.constraint(equalTo: stack.bottomAnchor,constant: 10),
             cartStack.leadingAnchor.constraint(equalTo: stack.leadingAnchor),
             cartStack.trailingAnchor.constraint(equalTo: stack.trailingAnchor),
             cartStack.heightAnchor.constraint(equalToConstant: 100),
@@ -375,10 +388,8 @@ class BookDetail:UIViewController{
         
     }
     func recommend(){
-        let id = User.theUser.getid()
         let idbook = self.book!.id
         let para:[String:Any] = [
-            "id_user":id,
             "id_book":idbook
         ]
         var request = URLRequest(url: URL(string: K.recommendAPI)!)
@@ -411,24 +422,24 @@ class BookDetail:UIViewController{
                                 
                                 self.afterRecommend?.isActive = true
                                 
-//                                self.view.addSubview(self.recommendCV)
-//                                self.view.addSubview(self.recommedLabel)
+                                //                                self.view.addSubview(self.recommendCV)
+                                //                                self.view.addSubview(self.recommedLabel)
                                 
-//                                NSLayoutConstraint.activate([
-//
-//                                    self.recommedLabel.topAnchor.constraint(equalTo: self.cartStack.bottomAnchor ,constant: 5),
-//                                    self.recommedLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 15),
-//                                    self.recommedLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-//                                    self.recommedLabel.heightAnchor.constraint(equalToConstant: 20),
-//
-//
-//
-//                                    self.recommendCV.topAnchor.constraint(equalTo: self.recommedLabel.bottomAnchor ,constant: 5),
-//                                    self.recommendCV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 15),
-//                                    self.recommendCV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
-//                                    self.recommendCV.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
-//
-//                                ])
+                                //                                NSLayoutConstraint.activate([
+                                //
+                                //                                    self.recommedLabel.topAnchor.constraint(equalTo: self.cartStack.bottomAnchor ,constant: 5),
+                                //                                    self.recommedLabel.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 15),
+                                //                                    self.recommedLabel.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+                                //                                    self.recommedLabel.heightAnchor.constraint(equalToConstant: 20),
+                                //
+                                //
+                                //
+                                //                                    self.recommendCV.topAnchor.constraint(equalTo: self.recommedLabel.bottomAnchor ,constant: 5),
+                                //                                    self.recommendCV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 15),
+                                //                                    self.recommendCV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
+                                //                                    self.recommendCV.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
+                                //
+                                //                                ])
                                 
                                 
                                 UIView.animate(withDuration: 1.0, delay: 0.1, options: .curveEaseInOut, animations: {
@@ -448,7 +459,7 @@ class BookDetail:UIViewController{
                                 
                                 
                                 
-                                self.recommendCV.topAnchor.constraint(equalTo: self.recommedLabel.bottomAnchor ,constant: 5),
+                                self.recommendCV.topAnchor.constraint(equalTo: self.recommedLabel.bottomAnchor ,constant: 0),
                                 self.recommendCV.leadingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leadingAnchor,constant: 15),
                                 self.recommendCV.trailingAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.trailingAnchor),
                                 self.recommendCV.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor),
@@ -457,7 +468,7 @@ class BookDetail:UIViewController{
                             self.recommendCV.reloadData()
                             
                         }
-                    
+                        
                         
                         
                     }
@@ -466,17 +477,17 @@ class BookDetail:UIViewController{
             }
             
             if (response as! HTTPURLResponse).statusCode == 203{
-//                if let safedata = data{
-//                    let decoder = JSONDecoder()
-//                    let message = try! decoder.decode(Message.self, from: safedata)
-//                    DispatchQueue.main.async {
-//                        let alert = UIAlertController(title: "Thông Báo", message: message.message, preferredStyle: .alert)
-//                        alert.addAction(UIAlertAction(title: "Xác Nhận", style: .destructive, handler: nil))
-//                        if let self = self{
-//                            self.present(alert, animated: true, completion: nil)
-//                        }
-//                    }
-//                }
+                //                if let safedata = data{
+                //                    let decoder = JSONDecoder()
+                //                    let message = try! decoder.decode(Message.self, from: safedata)
+                //                    DispatchQueue.main.async {
+                //                        let alert = UIAlertController(title: "Thông Báo", message: message.message, preferredStyle: .alert)
+                //                        alert.addAction(UIAlertAction(title: "Xác Nhận", style: .destructive, handler: nil))
+                //                        if let self = self{
+                //                            self.present(alert, animated: true, completion: nil)
+                //                        }
+                //                    }
+                //                }
             }
         }
         task.resume()
@@ -490,11 +501,6 @@ class BookDetail:UIViewController{
         self.book = book
         self.isSearched = isSearched
         self.isRecommended = isRecommended
-        //        if self.isSearched == true{
-        //            clickrating(isSearched:true)
-        //        }else{
-        //            clickrating(isSearched:false)
-        //        }
         if self.isRecommended == false{
             self.recommend()
         }
@@ -503,7 +509,8 @@ class BookDetail:UIViewController{
         booksNameLabel.text = book.name
         authorLabel.text! += book.tacgia
         bookDescription.text! += book.mota
-        publisher.text! += book.nhaxuatban
+        publisher.text! += book.nhaxuatban1
+        theloai.text! += book.category
         priceLabel.text! += String(book.price) + " VND"
         stepperLabel.text = String(Int(stepper.value))
         
@@ -542,6 +549,7 @@ extension BookDetail:UICollectionViewDataSource{
         cell.book = book
         cell.fetchBookImage()
         cell.booksName.text = book.name
+        cell.booksName.numberOfLines = 2
         return cell
     }
     
@@ -557,8 +565,8 @@ extension BookDetail:UICollectionViewDataSource{
 extension BookDetail:UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = CGFloat(150)
-        let width = UIScreen.main.bounds.width / CGFloat(4.5)
+        let height = CGFloat(165)
+        let width = UIScreen.main.bounds.width / CGFloat(5.0)
         return CGSize(width: width, height: height)
     }
 }

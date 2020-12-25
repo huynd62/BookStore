@@ -6,17 +6,19 @@
 //
 
 import UIKit
-import FBSDKLoginKit
+//import FBSDKLoginKit
 
 
 class ViewController: UIViewController {
     
     
-    let loginFBButton:FBLoginButton = {
-        let fb = FBLoginButton()
-        fb.translatesAutoresizingMaskIntoConstraints = false
-        return fb
-    }()
+//    let loginFBButton:FBLoginButton = {
+//        let fb = FBLoginButton()
+//        fb.translatesAutoresizingMaskIntoConstraints = false
+//        return fb
+//    }()
+    
+    
     
     let logo :UIImageView = {
         let v = UIImageView(frame: .zero)
@@ -57,14 +59,14 @@ class ViewController: UIViewController {
     @objc func loginClick(){
         let username = usernameTF.text
         let password = passwordTF.text
-            
+        
         DispatchQueue.main.async {
             self.view.addSubview(self.loaderView)
             self.loaderView.addSubview(self.loader)
             self.loader.alpha = 1.0
             
             NSLayoutConstraint.activate([
-            
+                      
                 self.loaderView.heightAnchor.constraint(equalToConstant: 50),
                 self.loaderView.widthAnchor.constraint(equalTo: self.loaderView.heightAnchor),
                 self.loaderView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
@@ -76,11 +78,11 @@ class ViewController: UIViewController {
                 self.loader.leadingAnchor.constraint(equalTo: self.loaderView.leadingAnchor),
                 self.loader.trailingAnchor.constraint(equalTo: self.loaderView.trailingAnchor)
                 
-            
+                
             ])
             
         }
-
+        
         
         let api = K.loginAPI + "\(username!)" + "/" + "\(password!)"
         
@@ -96,16 +98,26 @@ class ViewController: UIViewController {
                         User.theUser.setid(id: Int(message.message)!)
                         User.theUser.setusername(username: username!)
                         
+                        UserDefaults.standard.set(true, forKey: "isLogedIn")
+                        UserDefaults.standard.set(User.theUser.getusername(), forKey: "username")
+                        UserDefaults.standard.set(User.theUser.getid(),forKey: "userid")
+                        
+                        
+                        
                         DispatchQueue.main.async {
-                            while BookService.myBooks.book.count == 0  && EventService.shared.events.count == 0 {
+                            while BookService.myBooks.book.count == 0  || EventService.shared.events.count == 0 {
                                 sleep(1)
                             }
                             self.loader.stopAnimating()
                             self.loader.removeFromSuperview()
                             self.loaderView.removeFromSuperview()
                             self.loader.startAnimating()
+                            
+//                            self.dismiss(animated: true, completion: nil)
+                            
                             let homevc = HomeScreenVC()
                             homevc.modalPresentationStyle = .fullScreen
+
                             self.present(homevc, animated: true, completion: nil)
                         }
                         
@@ -113,12 +125,12 @@ class ViewController: UIViewController {
                     }
                 }
                 if [202,203].contains((response as! HTTPURLResponse).statusCode){
+                    
                     if let safeData = data {
                         let decoder = JSONDecoder()
                         let message = try! decoder.decode(Message.self, from: safeData)
                         
                         DispatchQueue.main.async {
-                            
                             self.loader.stopAnimating()
                             self.loader.removeFromSuperview()
                             self.loaderView.removeFromSuperview()
@@ -250,19 +262,38 @@ class ViewController: UIViewController {
         //        }
         
     }
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+//        print("inside view will appear")
+//        logo.center.y -= self.view.bounds.height
+//        loginView .alpha = 0.0
+//        usernameView.alpha = 1.0
+//        passwordView.alpha = 1.0
+//        usernameView.center.x += self.view.bounds.width
+//        passwordView.center.x -= self.view.bounds.width
+        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        
+//        UIView.animate(withDuration: 1.0) {
+//            self.loginView.alpha = 1.0
+//        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.view.backgroundColor = .white
-        loginFBButton.translatesAutoresizingMaskIntoConstraints = false
-        loginFBButton.addTarget(self, action: #selector(fbLoginButtonClick), for: .touchUpInside)
-        
+//        loginFBButton.translatesAutoresizingMaskIntoConstraints = false
+//        loginFBButton.addTarget(self, action: #selector(fbLoginButtonClick), for: .touchUpInside)
+//
         loginButtonView.addSubview(loginButton)
         signUpButtonView.addSubview(signUpButton)
         
         self.view.addSubview(logo)
         self.view.addSubview(loginView)
-        self.view.addSubview(fbLabel)
+//        self.view.addSubview(fbLabel)
         loginView.addSubview(usernameView)
         loginView.addSubview(passwordView)
         
@@ -277,13 +308,30 @@ class ViewController: UIViewController {
         passwordView.addSubview(passwordTF)
         passwordTF.delegate = self
         
-        self.view.addSubview(fbButtonView)
-        fbButtonView.addSubview(loginFBButton)
+//        self.view.addSubview(fbButtonView)
+//        fbButtonView.addSubview(loginFBButton)
         
         let safeContent = self.view.safeAreaLayoutGuide
         
+        
+//        UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.65, initialSpringVelocity: 0.0, options: [], animations: {
+//            self.logo.center.y += self.view.bounds.height
+//        }, completion: nil)
+//
+        //        UIView.animate(withDuration: 1.5) {
+        ////            self.logo.center.y += self.view.bounds.height
+        //            self.usernameView.center.x -= self.view.bounds.width
+        //            self.passwordView.center.x += self.view.bounds.width
+        //        }
+        
+//        UIView.animate(withDuration: 1.5, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: [], animations: {
+//            self.usernameView.center.x -= self.view.bounds.width
+//            self.passwordView.center.x += self.view.bounds.width
+//        }, completion: nil)
+        
+        
+        
         NSLayoutConstraint.activate([
-            
             
             logo.topAnchor.constraint(equalTo: safeContent.topAnchor,constant: 40),
             logo.leadingAnchor.constraint(equalTo: safeContent.leadingAnchor,constant: 50),
@@ -349,23 +397,23 @@ class ViewController: UIViewController {
             signUpButton.bottomAnchor.constraint(equalTo: signUpButtonView.bottomAnchor),
             
             
-            fbLabel.topAnchor.constraint(equalTo: loginView.bottomAnchor,constant: 20),
-            fbLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            fbLabel.heightAnchor.constraint(equalToConstant:  20),
-            fbLabel.widthAnchor.constraint(equalToConstant:  300),
+//            fbLabel.topAnchor.constraint(equalTo: loginView.bottomAnchor,constant: 20),
+//            fbLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//            fbLabel.heightAnchor.constraint(equalToConstant:  20),
+//            fbLabel.widthAnchor.constraint(equalToConstant:  300),
             
-            fbButtonView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            fbButtonView.topAnchor.constraint(equalTo: fbLabel.bottomAnchor,constant: 20),
-            fbButtonView.heightAnchor.constraint(equalToConstant: 50),
-            fbButtonView.widthAnchor.constraint(equalToConstant: 220),
+//            fbButtonView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+//            fbButtonView.topAnchor.constraint(equalTo: fbLabel.bottomAnchor,constant: 20),
+//            fbButtonView.heightAnchor.constraint(equalToConstant: 50),
+//            fbButtonView.widthAnchor.constraint(equalToConstant: 220),
             
-            loginFBButton.topAnchor.constraint(equalTo: fbButtonView.topAnchor,constant: 5),
-            loginFBButton.leadingAnchor.constraint(equalTo: fbButtonView.leadingAnchor,constant: 5),
-            loginFBButton.trailingAnchor.constraint(equalTo: fbButtonView.trailingAnchor,constant: -5),
-            loginFBButton.bottomAnchor.constraint(equalTo: fbButtonView.bottomAnchor,constant: -5)
+//            loginFBButton.topAnchor.constraint(equalTo: fbButtonView.topAnchor,constant: 5),
+//            loginFBButton.leadingAnchor.constraint(equalTo: fbButtonView.leadingAnchor,constant: 5),
+//            loginFBButton.trailingAnchor.constraint(equalTo: fbButtonView.trailingAnchor,constant: -5),
+//            loginFBButton.bottomAnchor.constraint(equalTo: fbButtonView.bottomAnchor,constant: -5)
             
         ])
-
+        
         
     }    
     

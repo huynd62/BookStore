@@ -17,6 +17,7 @@ class SearchBar : UISearchBar {
         self.searchTextField.backgroundColor = .white
         let color = #colorLiteral(red: 0.5169081092, green: 0.4013616443, blue: 0.9968962073, alpha: 1)
         self.barTintColor = color
+        self.searchBarStyle = .minimal
         NSLayoutConstraint.activate([
             self.heightAnchor.constraint(equalToConstant: 40)
         ])

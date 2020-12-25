@@ -80,6 +80,7 @@ class CartTableView:UITableViewController{
         tableView.estimatedRowHeight = 210
         tableView.showsVerticalScrollIndicator = false
         
+        
     }
     
     required init?(coder: NSCoder) {

@@ -33,7 +33,6 @@ class EventService{
                     }
                 }
                 
-                
             }
         }
         task.resume()

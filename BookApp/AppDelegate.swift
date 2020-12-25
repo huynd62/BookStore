@@ -6,62 +6,99 @@
 //
 
 import UIKit
-import FBSDKCoreKit
+//import FBSDKCoreKit
 
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
+    
+    let defaults = UserDefaults.standard
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
-        ApplicationDelegate.shared.application(
-            application,
-            didFinishLaunchingWithOptions: launchOptions
-        )
+
         
         
         let window = UIWindow(frame: UIScreen.main.bounds)
         self.window = window
         BookService.myBooks.getTheBooks()
         EventService.shared.getEventsFromServer()
-//        while BookService.myBooks.book.isEmpty == true {
-//            sleep(1)
-//        }
+
 //        let homevc = HomeScreenVC()
 //        homevc.view.frame = UIScreen.main.bounds
 //        self.window?.rootViewController = homevc
         
-        if let token = AccessToken.current, !token.isExpired {
-            print("---------- hello ------")
+//        if let token = AccessToken.current, !token.isExpired {
+//            print("---------- hello ------")
+//            let homevc = HomeScreenVC()
+//            self.window?.rootViewController = homevc
+//        }else{
+//            print("-----Log In Screen--------")
+//            let loginVC = ViewController()
+//            let navigationVC = UINavigationController(rootViewController: loginVC)
+//            self.window!.rootViewController = navigationVC
+//        }
+        
+        
+        let isloggedin = defaults.bool(forKey: "isLogedIn")
+        if isloggedin == true {
+            User.theUser.setid(id: defaults.integer(forKey: "userid"))
+            User.theUser.setusername(username: defaults.object(forKey: "username") as? String)
+            
+            print(User.theUser.getid())
+            print(User.theUser.getusername())
+            
+            
+            
+
+            
+            while BookService.myBooks.book.count == 0 || EventService.shared.events.count == 0{
+                sleep(1)
+            }
+            
             let homevc = HomeScreenVC()
             self.window?.rootViewController = homevc
+            
+ 
         }else{
             print("-----Log In Screen--------")
             let loginVC = ViewController()
             let navigationVC = UINavigationController(rootViewController: loginVC)
             self.window!.rootViewController = navigationVC
         }
+        
+//        if let token = AccessToken.current, !token.isExpired {
+//            print("---------- hello ------")
+//            let homevc = HomeScreenVC()
+//            self.window?.rootViewController = homevc
+//        }else{
+//            print("-----Log In Screen--------")
+//            let loginVC = ViewController()
+//            let navigationVC = UINavigationController(rootViewController: loginVC)
+//            self.window!.rootViewController = navigationVC
+//        }
         self.window?.makeKeyAndVisible()
         return true
     }
     
     
-    func application(
-        _ app: UIApplication,
-        open url: URL,
-        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
-    ) -> Bool {
-        
-        ApplicationDelegate.shared.application(
-            app,
-            open: url,
-            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
-            annotation: options[UIApplication.OpenURLOptionsKey.annotation]
-        )
-        
-    }
+//    func application(
+//        _ app: UIApplication,
+//        open url: URL,
+//        options: [UIApplication.OpenURLOptionsKey : Any] = [:]
+//    ) -> Bool {
+//
+//        ApplicationDelegate.shared.application(
+//            app,
+//            open: url,
+//            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+//            annotation: options[UIApplication.OpenURLOptionsKey.annotation]
+//        )
+//
+//    }
     
     // MARK: UISceneSession Lifecycle
     

@@ -16,7 +16,11 @@ class Book:Hashable,Equatable,Decodable{
     
 
     static func == (lhs: Book, rhs: Book) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id && lhs.hotsale == rhs.hotsale && lhs.name == rhs.name && lhs.mota == rhs.mota && lhs.tacgia == rhs.tacgia && lhs.price == rhs.price && lhs.theloai == rhs.theloai && lhs.nxb == rhs.nxb
+    }
+    
+    func equalID(book:Book) -> Bool{
+        self.id == book.id
     }
     var id:Int
     var name:String
@@ -25,6 +29,7 @@ class Book:Hashable,Equatable,Decodable{
     var mota:String
     var nxb:Int
     var theloai:Int
+    var hotsale:Bool?
     
     var nhaxuatban:String {
         String(nxb)
@@ -45,6 +50,29 @@ class Book:Hashable,Equatable,Decodable{
             return "Not Found"
         }
     }
+    
+    var nhaxuatban1:String {
+        switch nxb {
+        case 1:
+            return "Kim Đồng"
+        case 2:
+            return "Raywenderlich"
+        case 3:
+            return "Đông A"
+        case 4:
+            return "NXB Trẻ"
+        case 5:
+            return "First News"
+        case 6:
+            return "Nhã Nam"
+        case 7:
+            return "Trí Thức"
+        case 8:
+            return "Thái Hà Books"
+        default:
+            return "Not Found"
+        }
+    }
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
@@ -55,7 +83,7 @@ class Book:Hashable,Equatable,Decodable{
         "https://project-4th.herokuapp.com/callimage/\(id)"
     }
     
-    init(id:Int,name:String,price:Int,nxb:Int,mota:String,tacgia:String,theloai:Int) {
+    init(id:Int,name:String,price:Int,nxb:Int,mota:String,tacgia:String,theloai:Int,hotsale:Bool) {
         
         self.id = id
         self.name = name
@@ -64,6 +92,7 @@ class Book:Hashable,Equatable,Decodable{
         self.mota = mota
         self.tacgia = tacgia
         self.theloai = theloai
+        self.hotsale = hotsale
         
     }
 }

@@ -10,10 +10,12 @@ import UIKit
 
 class SellArea:UIView{
 
-    let sachbanchay = SachBanChay(frame: .zero, label: "Sách Bán Chạy", theloai: nil)
-    let comicBooks = SachBanChay(frame: .zero,label: "Truyện Tranh",theloai: 1)
-    let selfhelpBooks = SachBanChay(frame: .zero,label: "Self-Help",theloai: 2)
-    let novelBooks = SachBanChay(frame: .zero,label: "Tiểu Thuyết",theloai: 4)
+    let sachbanchay = SachBanChay(frame: .zero, label: "Sách Bán Chạy", theloai: 0,icon: .hot,iconcolor: .red)
+    let comicBooks = SachBanChay(frame: .zero,label: "Truyện Tranh",theloai: 1,icon: .comic,iconcolor: .red)
+    let selfhelpBooks = SachBanChay(frame: .zero,label: "Self-Help",theloai: 2,icon: .selfhelp,iconcolor: .red)
+    let novelBooks = SachBanChay(frame: .zero,label: "Tiểu Thuyết",theloai: 4,icon: .novel,iconcolor: .red)
+    let itBooks = SachBanChay(frame: .zero,label: "Công Nghệ Thông Tin",theloai: 3,icon: .cntt,iconcolor: .red)
+    let economicBooks = SachBanChay(frame: .zero,label: "Kinh Tế - Chính Trị",theloai: 5,icon: .economic,iconcolor: .red)
     
     
     let uiblock : UIView = {
@@ -44,11 +46,13 @@ class SellArea:UIView{
     
     override func layoutSubviews() {
         self.addSubview(mainScrollView)
-        mainScrollView.contentSize = CGSize(width: self.frame.width, height: CGFloat(1500))
+        mainScrollView.contentSize = CGSize(width: self.frame.width, height: CGFloat(1700))
         mainScrollView.addSubview(sachbanchay)
         mainScrollView.addSubview(selfhelpBooks)
         mainScrollView.addSubview(comicBooks)
         mainScrollView.addSubview(novelBooks)
+        mainScrollView.addSubview(economicBooks)
+        mainScrollView.addSubview(itBooks)
 //        mainScrollView.addSubview(namelable)
 //        mainScrollView.addSubview(uiblock)
         let scrollFrame = mainScrollView.frameLayoutGuide
@@ -82,6 +86,22 @@ class SellArea:UIView{
             novelBooks.topAnchor.constraint(equalTo: comicBooks.bottomAnchor,constant: 30),
             novelBooks.trailingAnchor.constraint(equalTo: scrollFrame.trailingAnchor,constant : -10),
             novelBooks.heightAnchor.constraint(equalToConstant: 250),
+            
+            economicBooks.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor,constant: 20),
+            economicBooks.topAnchor.constraint(equalTo: novelBooks.bottomAnchor,constant: 30),
+            economicBooks.trailingAnchor.constraint(equalTo: scrollFrame.trailingAnchor,constant : -10),
+            economicBooks.heightAnchor.constraint(equalToConstant: 250),
+            
+            
+            itBooks.leadingAnchor.constraint(equalTo: scrollContentView.leadingAnchor,constant: 20),
+            itBooks.topAnchor.constraint(equalTo: economicBooks.bottomAnchor,constant: 30),
+            itBooks.trailingAnchor.constraint(equalTo: scrollFrame.trailingAnchor,constant : -10),
+            itBooks.heightAnchor.constraint(equalToConstant: 250),
+            
+            
+            
+            
+            
  
         
             
@@ -97,6 +117,13 @@ class SellArea:UIView{
             
             
         ])
+        sachbanchay.applySnapshot(animatingDifferences: false)
+        selfhelpBooks.applySnapshot(animatingDifferences: false)
+        comicBooks.applySnapshot(animatingDifferences: false)
+        novelBooks.applySnapshot(animatingDifferences: false)
+        economicBooks.applySnapshot(animatingDifferences: false)
+        itBooks.applySnapshot(animatingDifferences: false)
+        
     }
     
         

@@ -19,11 +19,14 @@ class User {
     func setid(id:Int){
         self.id = id
     }
-    func setusername(username:String){
+    func setusername(username:String?){
         self.username = username
     }
     func getid()->Int{
         return self.id!
+    }
+    func getusername()->String{
+        return self.username!
     }
     
 }

@@ -6,6 +6,6 @@ target 'BookApp' do
   use_frameworks!
 
   # Pods for BookApp
-pod 'FBSDKLoginKit'
+#pod 'FBSDKLoginKit'
 
 end

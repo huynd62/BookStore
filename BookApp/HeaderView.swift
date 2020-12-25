@@ -13,12 +13,15 @@ import UIKit
 protocol openCartVC:class{
     func opentheCartVC()
 }
+protocol profileDelegate:class {
+    func openProfile()
+}
 
 class Header:UIView{
     
     var openCartDelegate:openCartVC?
-    
-    let searchBar = SearchBar()
+    var openprofileDelegate:profileDelegate?
+    let searchBar = SearchBar(frame: .zero)
     
     //    let userButton: UIButton = {
     //        let ub = UIButton(frame: .zero)
@@ -38,6 +41,7 @@ class Header:UIView{
     }
     @objc func optionSelected(){
         print("You have clicked the Option button")
+        openprofileDelegate?.openProfile()
     }
     
     override init(frame: CGRect) {
@@ -70,7 +74,7 @@ class Header:UIView{
             
             stackButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -5),
             stackButton.centerYAnchor.constraint(equalTo: searchBar.centerYAnchor),
-            stackButton.leadingAnchor.constraint(equalTo: searchBar.trailingAnchor)
+            stackButton.leadingAnchor.constraint(equalTo: searchBar.trailingAnchor),
         ])
         
         

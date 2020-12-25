@@ -43,6 +43,7 @@ class SachCollectionViewCell: UICollectionViewCell {
         lb.numberOfLines = 0
         lb.textAlignment = .center
         lb.adjustsFontSizeToFitWidth = true
+        lb.sizeToFit()
         return lb
     }()
     
@@ -58,7 +59,7 @@ class SachCollectionViewCell: UICollectionViewCell {
             booksImageView.topAnchor.constraint(equalTo: contentView.topAnchor , constant: 5),
             booksImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 10),
             booksImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10),
-            booksImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -70),
+            booksImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -65),
             
             booksName.topAnchor.constraint(equalTo: booksImageView.bottomAnchor,constant: 5),
             booksName.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
